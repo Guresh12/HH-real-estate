@@ -18,6 +18,7 @@ import { SiteVisitsManagement } from './pages/admin/SiteVisitsManagement';
 import { ReceiptsManagement } from './pages/admin/ReceiptsManagement';
 import { Reports } from './pages/admin/Reports';
 import { WebsiteContent } from './pages/admin/WebsiteContent';
+import { VirtualToursManagement } from './pages/admin/VirtualToursManagement';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -66,6 +67,7 @@ function App() {
                     <Route path="/receipts" element={<ReceiptsManagement />} />
                     <Route path="/reports" element={<Reports />} />
                     <Route path="/content" element={<WebsiteContent />} />
+                    <Route path="/virtual-tours" element={<VirtualToursManagement />} />
                   </Routes>
                 </ProtectedRoute>
               }

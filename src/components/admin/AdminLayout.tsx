@@ -11,7 +11,8 @@ import {
   LogOut,
   Menu,
   X,
-  AlertTriangle
+  AlertTriangle,
+  Video
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useState, useEffect } from 'react';
@@ -22,6 +23,7 @@ const navigation = [
   { name: 'Properties', href: '/admin/properties', icon: Building },
   { name: 'Clients', href: '/admin/clients', icon: Users },
   { name: 'Plots', href: '/admin/plots', icon: Map },
+  { name: 'Virtual Tours', href: '/admin/virtual-tours', icon: Video },
   { name: 'Site Visits', href: '/admin/site-visits', icon: Calendar },
   { name: 'Receipts', href: '/admin/receipts', icon: Receipt },
   { name: 'Reports', href: '/admin/reports', icon: BarChart3 },

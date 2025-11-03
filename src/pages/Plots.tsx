@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../lib/supabase';
 import { Plot } from '../types/database';
 import { MapPin, Maximize, DollarSign, CheckCircle, XCircle } from 'lucide-react';
+import { VirtualTourButton } from '../components/VirtualTourButton';
 
 export function Plots() {
   const { data: plots = [] } = useQuery<Plot[]>({
@@ -9,10 +10,13 @@ export function Plots() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('plots')
-        .select('*, client:clients(*)')
-        .order('created_at', { ascending: false });
+        .select('*, client:clients(*), virtual_tour:virtual_tours!plots_virtual_tour_id_fkey(*)')
+        .order('created_at', { ascending: false});
       if (error) throw error;
-      return data;
+      return data.map(plot => ({
+        ...plot,
+        virtual_tour: Array.isArray(plot.virtual_tour) ? plot.virtual_tour[0] : plot.virtual_tour
+      }));
     },
   });
 
@@ -91,14 +95,20 @@ export function Plots() {
                 </div>
 
                 {plot.status.toLowerCase() === 'sold' && plot.client && (
-                  <div className="border-t pt-4">
+                  <div className="border-t pt-4 mb-4">
                     <p className="text-sm text-gray-500">Sold to:</p>
                     <p className="text-sm font-medium text-gray-900">{plot.client.name}</p>
                   </div>
                 )}
 
+                {plot.virtual_tour && plot.virtual_tour.is_active && (
+                  <div className="mb-4">
+                    <VirtualTourButton tour={plot.virtual_tour} />
+                  </div>
+                )}
+
                 {plot.status.toLowerCase() === 'available' && (
-                  <button className="w-full mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-medium">
+                  <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-medium">
                     Inquire Now
                   </button>
                 )}

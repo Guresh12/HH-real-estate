@@ -1,5 +1,6 @@
 import { Bed, Bath, Maximize, User } from 'lucide-react';
 import { Property } from '../types/database';
+import { VirtualTourButton } from './VirtualTourButton';
 
 interface PropertyCardProps {
   property: Property;
@@ -57,10 +58,14 @@ export function PropertyCard({ property }: PropertyCardProps) {
         </div>
 
         {property.agent_name && (
-          <div className="border-t pt-4 flex items-center space-x-2 text-gray-700">
+          <div className="border-t pt-4 flex items-center space-x-2 text-gray-700 mb-4">
             <User className="h-4 w-4" />
             <span className="text-sm">Agent: {property.agent_name}</span>
           </div>
+        )}
+
+        {property.virtual_tour && property.virtual_tour.is_active && (
+          <VirtualTourButton tour={property.virtual_tour} />
         )}
       </div>
     </div>
