@@ -10,10 +10,13 @@ export function Properties() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('properties')
-        .select('*')
+        .select('*, virtual_tour:virtual_tours!properties_virtual_tour_id_fkey(*)')
         .order('created_at', { ascending: false });
       if (error) throw error;
-      return data;
+      return data.map(prop => ({
+        ...prop,
+        virtual_tour: Array.isArray(prop.virtual_tour) ? prop.virtual_tour[0] : prop.virtual_tour
+      }));
     },
   });
 

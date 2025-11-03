@@ -13,8 +13,11 @@ export interface Property {
   bathrooms: number;
   image_url: string;
   agent_name: string;
+  virtual_tour_id: string | null;
+  primary_tour_id: string | null;
   created_at: string;
   updated_at: string;
+  virtual_tour?: VirtualTour;
 }
 
 export interface Client {
@@ -26,6 +29,12 @@ export interface Client {
   agreement_doc_url: string;
   title_deed_url: string;
   notes: string;
+  kyc_status: string;
+  id_type: string;
+  id_number: string;
+  date_of_birth: string;
+  physical_address: string;
+  is_verified: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -40,9 +49,12 @@ export interface Plot {
   client_id: string | null;
   map_coordinates: string;
   dimensions: string;
+  virtual_tour_id: string | null;
+  primary_tour_id: string | null;
   created_at: string;
   updated_at: string;
   client?: Client;
+  virtual_tour?: VirtualTour;
 }
 
 export interface SiteVisit {
@@ -86,5 +98,19 @@ export interface WebsiteContent {
   image_url: string;
   display_order: number;
   is_active: boolean;
+  updated_at: string;
+}
+
+export interface VirtualTour {
+  id: string;
+  property_id: string | null;
+  plot_id: string | null;
+  tour_type: 'Kuula' | 'Matterport' | 'Embed' | 'External';
+  tour_url: string;
+  thumbnail_url: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  created_at: string;
   updated_at: string;
 }
